@@ -5,4 +5,5 @@ Key words for this project:
 - Desktop (GUI) Programming - Swing
 - Datbase Connection - JDBC
 - Database - MySQL
-- JAVA IDE - IntelliJ IDEA
+- JAVA IDE software - IntelliJ IDEA Community Edition 2022.2.2
+- MySQL software - Navicat Premium 16
