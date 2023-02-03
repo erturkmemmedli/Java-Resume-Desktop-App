@@ -1,0 +1,126 @@
+SET NAMES 'utf8';
+
+USE resume;
+
+DROP TABLE IF EXISTS employment_history;
+DROP TABLE IF EXISTS user_skill;
+DROP TABLE IF EXISTS skill;
+DROP TABLE IF EXISTS user;
+DROP TABLE IF EXISTS country;
+
+USE resume;
+
+CREATE TABLE country (
+  id INT(11) NOT NULL AUTO_INCREMENT,
+  nationality VARCHAR(255) DEFAULT NULL,
+  name VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY (id)
+)
+ENGINE = INNODB,
+AUTO_INCREMENT = 4,
+AVG_ROW_LENGTH = 8192,
+CHARACTER SET utf8,
+COLLATE utf8_general_ci;
+
+ALTER TABLE country 
+  ADD UNIQUE INDEX UK_nationality_country(name);
+
+CREATE TABLE user (
+  id INT(11) NOT NULL AUTO_INCREMENT,
+  firstname VARCHAR(55) DEFAULT NULL,
+  lastname VARCHAR(55) DEFAULT NULL,
+  email VARCHAR(50) DEFAULT NULL,
+  phone VARCHAR(16) DEFAULT NULL,
+  profile_description TEXT DEFAULT NULL,
+  birth_date DATE DEFAULT NULL,
+  birth_place INT(11) DEFAULT NULL,
+  nationality INT(11) DEFAULT NULL,
+  address VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY (id)
+)
+ENGINE = INNODB,
+AUTO_INCREMENT = 9,
+AVG_ROW_LENGTH = 2730,
+CHARACTER SET utf8,
+COLLATE utf8_general_ci;
+
+ALTER TABLE user 
+  ADD CONSTRAINT FK_user_birthplace FOREIGN KEY (birth_place)
+    REFERENCES country(id) ON DELETE NO ACTION;
+
+ALTER TABLE user 
+  ADD CONSTRAINT FK_user_nationality FOREIGN KEY (nationality)
+    REFERENCES country(id) ON DELETE NO ACTION;
+
+CREATE TABLE skill (
+  id INT(11) NOT NULL AUTO_INCREMENT,
+  name VARCHAR(50) NOT NULL,
+  PRIMARY KEY (id)
+)
+ENGINE = INNODB,
+AUTO_INCREMENT = 9,
+AVG_ROW_LENGTH = 2730,
+CHARACTER SET utf8,
+COLLATE utf8_general_ci;
+
+CREATE TABLE user_skill (
+  id INT(11) NOT NULL AUTO_INCREMENT,
+  user_id INT(11) DEFAULT NULL,
+  skill_id INT(11) DEFAULT NULL,
+  power INT(2) DEFAULT NULL,
+  PRIMARY KEY (id)
+)
+ENGINE = INNODB,
+AUTO_INCREMENT = 11,
+AVG_ROW_LENGTH = 5461,
+CHARACTER SET utf8,
+COLLATE utf8_general_ci;
+
+ALTER TABLE user_skill 
+  ADD CONSTRAINT FK_user_skill_skill_id FOREIGN KEY (skill_id)
+    REFERENCES skill(id) ON DELETE SET NULL ON UPDATE SET NULL;
+
+ALTER TABLE user_skill 
+  ADD CONSTRAINT FK_user_skill_user_id FOREIGN KEY (user_id)
+    REFERENCES user(id) ON DELETE SET NULL ON UPDATE SET NULL;
+
+CREATE TABLE employment_history (
+  id INT(11) NOT NULL AUTO_INCREMENT,
+  header VARCHAR(255) DEFAULT NULL,
+  begin_date DATE DEFAULT NULL,
+  end_date DATE DEFAULT NULL,
+  job_description VARCHAR(255) DEFAULT NULL,
+  user_id INT(11) NOT NULL,
+  PRIMARY KEY (id)
+)
+ENGINE = INNODB,
+AUTO_INCREMENT = 2,
+CHARACTER SET utf8,
+COLLATE utf8_general_ci;
+
+ALTER TABLE employment_history 
+  ADD INDEX FK_employment_history_user_id(user_id);
+
+INSERT INTO country VALUES
+(1, 'Azerbaijani', 'Azerbaijan'),
+(2, 'American', 'USA'),
+(3, 'Russian', 'Russoa');
+
+INSERT INTO user VALUES
+(1, 'Arturk', 'Mammadli', 'erturkmemmedli@gmail.com', '+994125210000', 'EE at METU, SDE at SOCAR', '1992-06-08', 1, 1, 'Aghdam');
+
+INSERT INTO skill VALUES
+(1, 'Scala'),
+(2, 'SQL'),
+(3, 'Java'),
+(4, 'Python'),
+(5, 'C++');
+
+INSERT INTO user_skill VALUES
+(1, 1, 4, 10),
+(2, 1, 3, 10),
+(3, 1, 2, 7);
+
+INSERT INTO employment_history VALUES
+(1, 'Control Engineer', '2018-09-24', '2022-04-11', 'SCADA', 1),
+(2, 'Software Engineer', '2022-04-11', '', 'SCADA', 1);
