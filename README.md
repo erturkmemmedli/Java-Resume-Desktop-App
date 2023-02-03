@@ -1,7 +1,8 @@
 # Java-Resume-Desktop-App
 
 Key words for this project:
-- Object Oriented Programming (OOP) with Java
-- Desktop (GUI) Programming with Swing
-- Datbase Connection with JDBC
-- Database with MySQL
+- Object Oriented Programming (OOP) - Java
+- Desktop (GUI) Programming - Swing
+- Datbase Connection - JDBC
+- Database - MySQL
+- JAVA IDE - IntelliJ IDEA
